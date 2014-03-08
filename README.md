@@ -1,4 +1,4 @@
-rentaj-ba
+restaurants-ba
 =========
 
 Mreza restorana
