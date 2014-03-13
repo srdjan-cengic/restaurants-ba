@@ -5,6 +5,10 @@ Restaurants::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'application#index'
 
+  namespace :api do
+    resources :restaurants, except: [:new, :edit], defaults: { format: 'json' }
+  end
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
