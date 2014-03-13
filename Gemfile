@@ -40,3 +40,6 @@ end
 
 # Ember
 gem 'ember-rails'
+
+# SOAP support
+gem 'wash_out'
