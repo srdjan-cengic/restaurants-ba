@@ -8,6 +8,7 @@ class Api::RestaurantsController < ApplicationController
 	# 404 = :not_found
 	# 200 = :ok
 	# 201 = :created
+	# 204 = :no_content = "resource deleted successfully"
 
 	# default is JSON format, set through routes
 	respond_to :json, :xml
@@ -81,6 +82,28 @@ class Api::RestaurantsController < ApplicationController
 		end
 	end
 
+	def destroy
+		respond_to do |format|
+			format.html { 
+			  head :method_not_allowed
+			  return
+			}
+
+			format.any(:json, :xml) {
+				begin
+		    		# something which might raise an exception
+					restaurant = Restaurant.find(params[:id])
+		  		rescue ActiveRecord::RecordNotFound
+		    		head :not_found
+					return
+		  		end
+
+		  		restaurant.destroy
+		  		head :no_content
+		  		return
+			}
+		end
+	end
 	private
 	  def restaurant_params
 	    @permitted = params.require(:restaurant).permit(:name, :description, :telephone, :fb_page, :video_url)
