@@ -49,3 +49,15 @@ gem 'devise'
 
 # Secure password
 gem 'bcrypt'
+
+# Bootstrap
+gem 'bootstrap-sass', '~> 3.1.1'
+
+# Authorization
+gem "cancan"
+
+# User roles
+gem "rolify"
+
+# Serializer
+gem "active_model_serializers"
