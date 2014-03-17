@@ -8,6 +8,7 @@ Restaurants::Application.routes.draw do
 
   namespace :api do
     resources :restaurants, except: [:new, :edit], defaults: { format: 'json' }
+    resources :users, except: [:new], defaults: {format:'json'}
   end
 
   # Example of regular route:
