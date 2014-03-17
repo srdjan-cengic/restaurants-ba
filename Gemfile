@@ -43,3 +43,9 @@ gem 'ember-rails'
 
 # SOAP support
 gem 'wash_out'
+
+# Devise for user authentication
+gem 'devise'
+
+# Secure password
+gem 'bcrypt'
