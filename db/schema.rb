@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140317233220) do
+ActiveRecord::Schema.define(version: 20140319192245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,12 +38,19 @@ ActiveRecord::Schema.define(version: 20140317233220) do
 
   add_index "coupons", ["restaurant_id"], name: "index_coupons_on_restaurant_id", using: :btree
 
+  create_table "favourites", force: true do |t|
+    t.integer  "restaurant_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "restaurants", force: true do |t|
     t.string   "name",        limit: 60, null: false
     t.text     "description",            null: false
     t.string   "telephone",   limit: 15, null: false
     t.string   "fb_page"
-    t.string   "video_url"
+    t.string   "image_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -85,11 +92,11 @@ ActiveRecord::Schema.define(version: 20140317233220) do
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
   create_table "votes", force: true do |t|
-    t.integer  "count",         default: 0
+    t.string   "vote_type",     limit: 4, default: "0"
     t.integer  "restaurant_id"
-    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
 end
