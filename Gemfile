@@ -43,3 +43,21 @@ gem 'ember-rails'
 
 # SOAP support
 gem 'wash_out'
+
+# Devise for user authentication
+gem 'devise'
+
+# Secure password
+gem 'bcrypt'
+
+# Bootstrap
+gem 'bootstrap-sass', '~> 3.1.1'
+
+# Authorization
+gem "cancan"
+
+# User roles
+gem "rolify"
+
+# Serializer
+gem "active_model_serializers"
