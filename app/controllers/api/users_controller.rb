@@ -1,5 +1,5 @@
 class Api::UsersController < ApplicationController
-	before_filter :user_params, only: [:create, :update, :edit]
+	before_filter :user_params, only: [:create, :update]
 	before_filter :check_method
 	# The head method can be used to send responses with only headers to the browser. 
 	# It provides a more obvious alternative to calling render :nothing.
@@ -48,6 +48,24 @@ class Api::UsersController < ApplicationController
 		}
 	  end
 	end
+
+	def create
+		respond_to do |format|
+			format.any(:json, :xml) {
+				#The bang versions (e.g. save!) raise an exception if the record is invalid.
+				user = User.new(@permitted)			
+				begin
+					user.save(validate:false)
+				rescue ActiveRecord::RecordInvalid
+					head :bad_request
+					return
+				end
+
+				head :created
+				return
+			}
+		end
+	end
 	# Be aware of: 
 	# ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken)
 	# 'Check to see who that client/IP is, it looks like they are using your site without 
@@ -73,7 +91,7 @@ class Api::UsersController < ApplicationController
 
 	private
 	  def user_params
-	    @permitted = params.require(:user).permit(:id, :email, :encrypted_password)
+	 	 @permitted = params.require(:user).permit(:id, :email, :encrypted_password)
 	  end
 
 	  def check_method
