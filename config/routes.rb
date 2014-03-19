@@ -10,7 +10,7 @@ Restaurants::Application.routes.draw do
     resources :restaurants, except: [:new, :edit], defaults: { format: 'json' }
     resources :users, except: [:new], defaults: {format:'json'}
     resources :coupons, except: [:new], defaults: {format: 'json'}
-  end
+    resources :coupon_reservations, except: [:new], defaults: {format: 'json'}
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
