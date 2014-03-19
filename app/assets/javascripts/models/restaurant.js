@@ -3,7 +3,7 @@ Restaurants.Restaurant = DS.Model.extend({
   description: DS.attr('string'),
   telephone: DS.attr('string'),
   fbPage: DS.attr('string'),
-  videoUrl: DS.attr('string'),
+  imageUrl: DS.attr('string'),
 
   nekaFunkcija: function() {
   	return "neka bussines logika!?";
