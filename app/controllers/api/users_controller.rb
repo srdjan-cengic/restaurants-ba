@@ -66,6 +66,24 @@ class Api::UsersController < ApplicationController
 			}
 		end
 	end
+
+	def update
+		respond_to do |format|
+			format.any(:json, :xml) {
+				begin
+		    		# something which might raise an exception
+					user = User.find(params[:id])
+					user.update(@permitted)
+		 		rescue ActiveRecord::RecordNotFound
+		    		head :not_found
+					return
+		 		end
+
+		 		head :no_content
+		  		return
+			}
+		end
+	end
 	# Be aware of: 
 	# ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken)
 	# 'Check to see who that client/IP is, it looks like they are using your site without 
