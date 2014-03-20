@@ -43,7 +43,7 @@ class Api::CouponsController < ApplicationController
 		format.any(:json, :xml) {
 		  begin
 		    # something which might raise an exception
-			user = Coupon.find(params[:id])
+			coupon = Coupon.find(params[:id])
 		  rescue ActiveRecord::RecordNotFound
 		    head :not_found
 			return
@@ -51,7 +51,7 @@ class Api::CouponsController < ApplicationController
 		  end
 
 
-		  respond_with user, status: :ok
+		  respond_with coupon, status: :ok
 		}
 	  end
 	end
@@ -79,7 +79,7 @@ class Api::CouponsController < ApplicationController
 	# ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken)
 	# 'Check to see who that client/IP is, it looks like they are using your site without 
 	# loading your views.'
-	
+
 
 	#metoda koja odgovara na DELETE /api/coupons/:id
 	def destroy
