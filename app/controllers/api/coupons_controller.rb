@@ -19,7 +19,7 @@ class Api::CouponsController < ApplicationController
 	respond_to :json, :xml
 
 
-	#metoda koja odgovara na GET /api/coupons
+	#metoda servisa koja odgovara na GET /api/coupons
 	def index
 	  respond_to do |format|
 	    format.any(:json, :xml) {
@@ -37,13 +37,13 @@ class Api::CouponsController < ApplicationController
 	  end
 	end
 
-	#metoda koja odgovara na GET /api/coupons/:id
+	#metoda servisa koja odgovara na GET /api/coupons/:id
 	def show
 	  respond_to do |format|
 		format.any(:json, :xml) {
 		  begin
 		    # something which might raise an exception
-			user = Coupon.find(params[:id])
+			coupon = Coupon.find(params[:id])
 		  rescue ActiveRecord::RecordNotFound
 		    head :not_found
 			return
@@ -51,12 +51,12 @@ class Api::CouponsController < ApplicationController
 		  end
 
 
-		  respond_with user, status: :ok
+		  respond_with coupon, status: :ok
 		}
 	  end
 	end
 
-
+	#metoda servisa koja odgovara na POST /api/coupons
 	def create
 		respond_to do |format|
 			format.any(:json, :xml) {
@@ -79,9 +79,27 @@ class Api::CouponsController < ApplicationController
 	# ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken)
 	# 'Check to see who that client/IP is, it looks like they are using your site without 
 	# loading your views.'
-	
 
-	#metoda koja odgovara na DELETE /api/coupons/:id
+	#metoda servisa koja odgovara na PUT /api/coupons/:id
+	def update
+			respond_to do |format|
+				format.any(:json, :xml) {
+					begin
+			    		# something which might raise an exception
+						coupon = Coupon.find(params[:id])
+						coupon.update(@permitted)
+			 		rescue ActiveRecord::RecordNotFound
+			    		head :not_found
+						return
+			 		end
+
+			 		head :no_content
+			  		return
+				}
+			end
+		end
+
+	#metoda servisa koja odgovara na DELETE /api/coupons/:id
 	def destroy
 		respond_to do |format|
 			format.any(:json, :xml) {
