@@ -12,7 +12,11 @@ Restaurants::Application.routes.draw do
     resources :users, except: [:new], defaults: {format:'json'}
     resources :coupon_reservations, except: [:new], defaults: {format: 'json'}
     resources :coupons, except: [:new], defaults: {format: 'json'}
+<<<<<<< HEAD
     
+=======
+    resources :votes, except: [:new], defaults: {format: 'json'}
+>>>>>>> 124bc9887d2f99f30224433d5ab8d069e8203d10
   end
 
 
