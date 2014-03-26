@@ -6,12 +6,22 @@ Restaurants::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'application#index'
 
+
   namespace :api do
     resources :restaurants, except: [:new, :edit], defaults: { format: 'json' }
     resources :users, except: [:new], defaults: {format:'json'}
     resources :coupon_reservations, except: [:new], defaults: {format: 'json'}
     resources :coupons, except: [:new], defaults: {format: 'json'}
+    
   end
+
+
+
+
+  namespace :sa do
+    resources :sudo, controller: 'sudo'
+  end
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
