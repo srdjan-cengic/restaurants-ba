@@ -1,5 +1,6 @@
 Restaurants::Application.routes.draw do
-  devise_for :users
+  devise_for :users, :path => 'superadmin' , :path_names => { :users=>'superadmin', :sign_in => 'login' , :sign_up => 'register', :sign_out=>'logout'}
+  #devise_for :user, :path => '', :path_names => { :sign_in => "login", :sign_out => "logout", :sign_up => "register" }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -16,12 +17,15 @@ Restaurants::Application.routes.draw do
 
   end
 
-
-
-
-  namespace :sa do
-    resources :sudo, controller: 'sudo'
+  devise_scope :user do
+    post "/superadmin/register", to: "devise/registrations#create"
   end
+
+  namespace :superadmin do
+    resources :home, controller: 'superadmin'
+  end
+
+
 
 
   # Example of regular route:
