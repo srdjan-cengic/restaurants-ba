@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  
+  #protected attributes
+  attr_accessible :cached_failed_attempts
 
   rolify
   # Include default devise modules. Others available are:
