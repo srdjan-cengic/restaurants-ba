@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140319194532) do
+ActiveRecord::Schema.define(version: 20140326184112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "api_keys", force: true do |t|
+    t.string   "access_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "coupon_reservations", force: true do |t|
     t.integer  "user_id"
@@ -37,6 +43,13 @@ ActiveRecord::Schema.define(version: 20140319194532) do
   end
 
   add_index "coupons", ["restaurant_id"], name: "index_coupons_on_restaurant_id", using: :btree
+
+  create_table "examples", force: true do |t|
+    t.string   "kolona1"
+    t.integer  "kolona2"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "favourites", force: true do |t|
     t.integer  "restaurant_id"

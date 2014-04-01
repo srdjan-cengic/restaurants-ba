@@ -1,6 +1,9 @@
 class Api::RestaurantsController < ApplicationController
+	#http_basic_authenticate_with name: "admin", password: "admi1n", only: :create
 	before_filter :restaurant_params, only: [:create, :update]
 	before_filter :check_method
+	#before_filter :check_token_via_url, only: :index
+	#before_filter :check_token_via_header, only: :show
 	# The head method can be used to send responses with only headers to the browser. 
 	# It provides a more obvious alternative to calling render :nothing.
 
@@ -123,6 +126,22 @@ class Api::RestaurantsController < ApplicationController
 	  		head :method_not_allowed
 	  	end
 	  end
+
+
+	  #1. you can pass token to server by URL, which is not smart: http://localhost:3000/api/restaurants?access_token=2a7eeffe15c79ad4344ffb709ffde9df
+	  def check_token_via_url
+	      access_token = ApiKey.find_by_access_token(params[:access_token])
+	      head :unauthorized unless access_token
+      end
+      #2. pass it via header to server(HTTP Authorization header)
+      def check_token_via_header
+      	#if the block return true, user has access
+      	#za nepostojanje ili pogresan token => HTTP Token: Access denied.(401 Unauthorized)
+      	#za dobar token, kroz header 'Authorization: Token token="a3urwruw030345ur03qu404"'
+      	authenticate_or_request_with_http_token do |token, options|
+      		ApiKey.exists?(access_token: token)
+      	end
+      end
 end
 
 #The @Consumes annotation is used to specify which MIME media types of representations a resource can accept, or consume, from the client. 

@@ -1,8 +1,10 @@
 Restaurants::Application.routes.draw do
-  devise_for :users
+  resources :examples
+
+  devise_for :users, controllers: { sessions: 'sessions' }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
-
+  wash_out :soap
   # You can have the root of your site routed with "root"
   root 'application#index'
 
@@ -11,7 +13,9 @@ Restaurants::Application.routes.draw do
     resources :users, except: [:new], defaults: {format:'json'}
     resources :coupon_reservations, except: [:new], defaults: {format: 'json'}
     resources :coupons, except: [:new], defaults: {format: 'json'}
+    resources :test, only: :index, defaults: {format: 'json'}
   end
+
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

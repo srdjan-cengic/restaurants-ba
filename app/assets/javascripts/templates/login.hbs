@@ -1,1 +1,65 @@
-<h1> Login </h1>
+{{! You can optionally pass arguments to the action handler. Any values passed to the action helper after the action name will be passed to the handler as arguments.}}
+
+{{!-- https://github.com/emberjs/ember.js/issues/2007 --}}
+
+{{ controller.model }}                {{!-- property of LoginController --}}
+{{ controller.content }}
+{{!-- <Ember.Object:ember318> <Ember.Object:ember318> --}}
+
+{{ nesta }}
+{{ model.nesta }}
+{{ controller.model}}
+
+{{!-- Passing params to action "login", controller.content, "srle" --}}
+
+<form {{action "login" on="submit"}} class="form-horizontal"> 
+  <legend>Login</legend>
+
+  {{#if errorMsg}}
+    <div class="alert alert-error">
+      {{errorMsg}}
+    </div>
+  {{/if}}
+
+  <div class="control-group">
+    <label class="control-label" for="email">Email</label>
+    <div class="controls">
+      {{view Ember.TextField valueBinding="email" id="email"}}
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="password">Password</label>
+    <div class="controls">
+      {{view Ember.TextField valueBinding="password" type="password" id="password"}}
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button  type="submit" class="btn btn-primary" value="Login">Login</button>
+    <input {{action "cancel"}} type="submit" class="btn" value="Cancel" />
+  </div>
+</form>
+
+{{!-- 
+  1. CONTEXT IN THE VIEW IS CONTROLLER IT SELF!
+  Restaurants.LoginController = Ember.ObjectController.extend({
+    srlee: "Srle juhu233!"
+  });
+
+  and in the login.hbs => {{ this.srlee }} you will get output of: "Srle juhu233!"
+  controller.model === this.model, in the view
+
+
+  2.By default, the {{action}} helper triggers a method on the template's controller
+    tj. Actions are events that trigger associated methods in their current controller.
+    a current controller templejta je 1.(procitaj)
+
+    Pretpostavlja se da imas objeckat "actions" u login kontroleru.
+    A mi imamo rutu /login, this.route("login")
+    => na osnovu toga imas:
+    Route name      Route           Controller             Template         Url
+    -------------------------------------------------------------------------------
+    login           LoginRoute      LoginController        login            #/login
+
+--}}

@@ -1,3 +1,4 @@
 Restaurants.Router.map(function() {
-  this.resource('login');
+  this.route('login');
+  this.route('registration');
 });

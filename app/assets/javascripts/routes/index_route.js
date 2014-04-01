@@ -1,6 +1,9 @@
 Restaurants.IndexRoute = Ember.Route.extend({
 	model: function() {
 		return this.store.find('restaurant'); // By model name?
+	},
+	setupController: function(controller, model) {
+		console.log("Evo me u setupController-u index route-a");
 	}
 });
 
