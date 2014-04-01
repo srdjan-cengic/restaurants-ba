@@ -1,12 +1,17 @@
 Restaurants::Application.routes.draw do
+
   resources :examples
 
   devise_for :users, controllers: { sessions: 'sessions' }
+
+  devise_for :users, :path => 'superadmin' , :path_names => { :users=>'superadmin', :sign_in => 'login' , :sign_up => 'register', :sign_out=>'logout', sessions:'sessions'}
+  #devise_for :user, :path => '', :path_names => { :sign_in => "login", :sign_out => "logout", :sign_up => "register" }
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   wash_out :soap
   # You can have the root of your site routed with "root"
   root 'application#index'
+
 
   namespace :api do
     resources :restaurants, except: [:new, :edit], defaults: { format: 'json' }
@@ -14,8 +19,17 @@ Restaurants::Application.routes.draw do
     resources :coupon_reservations, except: [:new], defaults: {format: 'json'}
     resources :coupons, except: [:new], defaults: {format: 'json'}
     resources :test, only: :index, defaults: {format: 'json'}
+    resources :votes, except: [:new], defaults: {format: 'json'}
+
   end
 
+  devise_scope :user do
+    post "/superadmin/register", to: "devise/registrations#create"
+  end
+
+  namespace :superadmin do
+    resources :home, controller: 'superadmin'
+  end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

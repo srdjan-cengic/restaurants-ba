@@ -1,8 +1,9 @@
-class Api::UsersController < ApplicationController
-	before_filter :user_params, only: [:create, :update]
+class Api::VotesController < ApplicationController
+	before_filter :votes_params, only: [:create, :update]
 	before_filter :check_method
 	# The head method can be used to send responses with only headers to the browser. 
 	# It provides a more obvious alternative to calling render :nothing.
+
 
 	# http://apidock.com/rails/ActionController/Base/render
 	# http://stackoverflow.com/questions/2342579/http-status-code-for-update-and-delete
@@ -12,39 +13,42 @@ class Api::UsersController < ApplicationController
 	# 201 = :created
 	# 204 = :no_content
 
+
 	# default is JSON format, set through routes
 	# Respond to also allows you to specify a common block for different formats by using any:
 	respond_to :json, :xml
 
-	#metoda koja odgovara na GET /api/users
+#metoda koja odgovara na GET /api/votes
 	def index
 	  respond_to do |format|
 	    format.any(:json, :xml) {
-	      users = User.all
+	      votes = Vote.all
 
-		  if users.empty? 
+		  if votes.empty? 
 		    head :not_found
 		    return
 		  end
 
-		  respond_with users, status: :ok
+		  respond_with votes, status: :ok
 	    }
 	  end
 	end
-	#metoda koja odgovara na GET /api/users/:id
+
+#metoda koja odgovara na GET /api/votes/:id
 	def show
 	  respond_to do |format|
 		format.any(:json, :xml) {
 		  begin
 		    # something which might raise an exception
-			user = User.find(params[:id])
+			vote = Vote.find(params[:id])
 		  rescue ActiveRecord::RecordNotFound
 		    head :not_found
 			return
 			#puts "Prosao sam dalje"
 		  end
 
-		  respond_with user, status: :ok
+
+		  respond_with vote, status: :ok
 		}
 	  end
 	end
@@ -53,9 +57,10 @@ class Api::UsersController < ApplicationController
 		respond_to do |format|
 			format.any(:json, :xml) {
 				#The bang versions (e.g. save!) raise an exception if the record is invalid.
-				user = User.new(@permitted)			
+				vote = Vote.new(@permitted)
+				
 				begin
-					user.save(validate:false)
+					vote.save!
 				rescue ActiveRecord::RecordInvalid
 					head :bad_request
 					return
@@ -67,13 +72,14 @@ class Api::UsersController < ApplicationController
 		end
 	end
 
+
 	def update
 		respond_to do |format|
 			format.any(:json, :xml) {
 				begin
 		    		# something which might raise an exception
-					user = User.find(params[:id])
-					user.update(@permitted)
+					vote = Vote.find(params[:id])
+					vote.update(@permitted)
 		 		rescue ActiveRecord::RecordNotFound
 		    		head :not_found
 					return
@@ -84,23 +90,21 @@ class Api::UsersController < ApplicationController
 			}
 		end
 	end
-	# Be aware of: 
-	# ActionController::InvalidAuthenticityToken (ActionController::InvalidAuthenticityToken)
-	# 'Check to see who that client/IP is, it looks like they are using your site without 
-	# loading your views.'
-	#metoda koja odgovara na DELETE /api/user/:id
+
+
+    #metoda koja odgovara na DELETE /api/votes/:id
 	def destroy
 		respond_to do |format|
 			format.any(:json, :xml) {
 				begin
 		    		# something which might raise an exception
-					user = User.find(params[:id])
+					vote = Vote.find(params[:id])
 		  		rescue ActiveRecord::RecordNotFound
 		    		head :not_found
 					return
 		  		end
 
-		  		user.destroy
+		  		vote.destroy
 		  		head :no_content
 		  		return
 			}
@@ -108,8 +112,8 @@ class Api::UsersController < ApplicationController
 	end
 
 	private
-	  def user_params
-	 	 @permitted = params.require(:user).permit(:id, :email, :encrypted_password)
+	  def votes_params
+	    @permitted = params.require(:vote).permit(:id, :vote_type, :restaurant_id, :user_id)
 	  end
 
 	  def check_method
@@ -123,7 +127,11 @@ class Api::UsersController < ApplicationController
 	  		head :method_not_allowed
 	  	end
 	  end
-end
+
+
+
+
+	end
 
 #The @Consumes annotation is used to specify which MIME media types of representations a resource can accept, or consume, from the client. 
 #The @Produces annotation is used to specify the MIME media types or representations a resource can produce and send back to the client.

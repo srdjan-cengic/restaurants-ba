@@ -50,6 +50,12 @@ gem 'devise'
 # Secure password
 gem 'bcrypt'
 
+#ReCaptcha
+gem 'recaptcha', require: 'recaptcha/rails'
+
+# protected attributes
+gem 'protected_attributes'
+
 # Bootstrap
 gem 'bootstrap-sass', '~> 3.1.1'
 

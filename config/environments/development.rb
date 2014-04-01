@@ -32,4 +32,9 @@ Restaurants::Application.configure do
 
   # Devise setup
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
+  #setting public and private key for ReCaptcha
+  ENV['RECAPTCHA_PUBLIC_KEY'] = '6Lfi7fASAAAAADwSE8iL7WQ2YF4m0aizA2Nz140G'
+  ENV['RECAPTCHA_PRIVATE_KEY'] = '6Lfi7fASAAAAAHtDnsfaJfdh2DQmynpfXOUI4NGT'
+
 end
